@@ -28,7 +28,7 @@ python kappa.py ratings.csv
 ### 2. Compute Cohen's Kappa for Gaps (RQ2)
 python kappa_gaps.py gap_ratings.csv
 
-###Data Summary
+### Data Summary
 Claims Audit: 24 claims across 15 surveys (2024–2026), evaluated for silicon, simulated, vendor, and normalized provenance.
 Gaps Audit: 12 open research gaps tracked from baseline publication dates to November 2026 (3 Closed, 5 Partly Addressed, 4 Open).
 MLPerf Group: 8× NVIDIA H100-SXM servers on identical host hardware, evaluating throughput spread and cross-round progression.

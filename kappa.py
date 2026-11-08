@@ -1,19 +1,3 @@
-"""Cohen's kappa for the dual-rater provenance audit (Section 2.3.3).
-
-Usage:
-    python kappa.py ratings.csv
-
-ratings.csv must have a header row with these columns:
-    claim_id,rater1,rater2
-
-Allowed codes (case-insensitive):
-    silicon, simulated, vendor, normalized, unstated
-
-Each row holds the two raters' independent, pre-discussion codes.
-The script prints the agreement matrix (Table 5), p_o, p_e, kappa,
-a 95% bootstrap confidence interval, and the list of disagreements
-to copy into the resolution log (Table 6).
-"""
 
 import csv
 import random
@@ -62,7 +46,7 @@ def main():
     pairs = [(a, b) for _, a, b in rows]
     n = len(pairs)
 
-    # Agreement matrix
+    
     print(f"N = {n}\n")
     short = {"silicon": "Sil", "simulated": "Sim", "vendor": "Ven",
              "normalized": "Nor", "unstated": "Uns"}
@@ -78,20 +62,20 @@ def main():
     print(f"p_e   = {p_e:.4f}")
     print(f"kappa = {k:.4f}")
 
-    # Bootstrap CI over claims
+    
     rng = random.Random(20261107)
     boots = []
     for _ in range(10000):
         sample = [pairs[rng.randrange(n)] for _ in range(n)]
         _, _, kb = kappa(sample)
-        if kb == kb:  # skip NaN (all codes identical in resample)
+        if kb == kb:  
             boots.append(kb)
     boots.sort()
     lo = boots[int(0.025 * len(boots))]
     hi = boots[int(0.975 * len(boots)) - 1]
     print(f"95% bootstrap CI = [{lo:.3f}, {hi:.3f}]  ({len(boots)} valid resamples)")
 
-    # Disagreements for Table 6
+    
     dis = [(cid, a, b) for cid, a, b in rows if a != b]
     print(f"\nDisagreements ({len(dis)}):")
     for cid, a, b in dis:
